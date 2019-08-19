@@ -1,9 +1,10 @@
 const express = require('express');
+const bcrypt = require('bcryptjs');
 const Users = require('../users/usersModel');
 const { checkUserAtReg, checkUserAtLogin } = require('./authMiddleware');
 const router = express.Router();
 
-router.post('/register', checkUserAtReg, async (req, res, next) => {
+router.post('/register', checkUserAtReg, async ( req, res, next) => {
     try {
         let user = req.body;
         const hash = bcrypt.hashSync(user.password, 12);
@@ -16,7 +17,7 @@ router.post('/register', checkUserAtReg, async (req, res, next) => {
 });
 
 router.post('/login', checkUserAtLogin, (req, res, next) => {
-    const { username, password } = req.headers;
+    const { username, password } = req.body;
     Users.findByUsername(username)
         .first()
         .then(user => {

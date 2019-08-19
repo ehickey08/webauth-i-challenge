@@ -19,8 +19,8 @@ server.use('/users' , usersRouter)
 server.use(errorHandler)
 
 function errorHandler(error, req, res, next){
-    console.log(error.err)
-    res.status(error.stat).json({error: error.message });
+    console.log(error.err || '')
+    res.status(error.stat || 500).json({error: error.message || 'Internal server error.' });
 }
 module.exports = server;
 

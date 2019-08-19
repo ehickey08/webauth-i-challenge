@@ -8,7 +8,7 @@ module.exports = {
 }
 
 function getAll(){
-    db('users')
+    return db('users')
 }
 
 function findByUsername(username) {
@@ -20,5 +20,5 @@ function add(user){
 }
 
 function findById(id){
-    return db('users').where({id}).first(0)
+    return db('users').where({id}).first()
 }
