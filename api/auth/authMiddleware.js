@@ -16,7 +16,7 @@ function restricted(req, res, next) {
                 if (user && bcrypt.compareSync(password, user.password)) next();
             })
             .catch(err => {
-                next({ err, stat: 401, message: 'Invalid username.' });
+                next({ err, stat: 401, message: 'Invalid credentials.' });
             });
     } else {
         next({ stat: 400, message: 'Please send valid credentials.' });
