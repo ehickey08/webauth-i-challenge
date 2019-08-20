@@ -1,4 +1,3 @@
-const bcrypt = require('bcryptjs');
 const Users = require('../users/usersModel');
 
 module.exports = {
@@ -8,17 +7,8 @@ module.exports = {
 };
 
 function restricted(req, res, next) {
-    const { username, password } = req.headers;
-    if (username && password) {
-        Users.findByUsername(username)
-            .first()
-            .then(user => {
-                if (user && bcrypt.compareSync(password, user.password)) next();
-                else next({ stat: 401, message: 'Invalid credentials.' });
-            });
-    } else {
-        next({ stat: 400, message: 'Please send valid credentials.' });
-    }
+    if (req.session && req.session.username) next();
+    else next({ stat: 401, message: 'Invalid credentials.' });
 }
 
 async function checkUserAtReg(req, res, next) {
